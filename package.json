@@ -1,0 +1,14 @@
+{
+  "name": "ai-school-valentina",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Статический учебный сайт, готовый к публикации на GitHub Pages",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "serve": "python -m http.server 8080"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

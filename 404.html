@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="Практическая AI-школа для Валентины: ChatGPT, генерация изображений, нейрофотосессии, блогинг, Midjourney, Claude и AI-мультфильмы.">
+  <meta property="og:title" content="AI-школа для Валентины">
+  <meta property="og:description" content="Нейросети с нуля — спокойно, красиво и по шагам.">
+  <meta property="og:type" content="website">
+  <title>AI-школа для Валентины</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./site.webmanifest">
+  <link rel="stylesheet" href="./assets/styles.css">
+</head>
+<body>
+  <div class="page-progress" id="pageProgress" aria-hidden="true"></div>
+  <canvas class="ambient-canvas" id="ambientCanvas" aria-hidden="true"></canvas>
+  <div class="ambient-orb orb-one" aria-hidden="true"></div>
+  <div class="ambient-orb orb-two" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="site-header" id="siteHeader">
+    <div class="shell header-inner">
+      <a class="brand" href="#/" aria-label="На главную">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" role="img"><path d="M24 3 29.8 17.3 45 19l-11.5 10 3.4 15L24 36.2 11.1 44l3.4-15L3 19l15.2-1.7L24 3Z" fill="currentColor"/><path d="m24 14 2.8 6.9 7.2.8-5.5 4.8 1.7 7.1-6.2-3.7-6.2 3.7 1.7-7.1-5.5-4.8 7.2-.8L24 14Z" fill="white" opacity=".8"/></svg>
+        </span>
+        <span><strong>AI-школа</strong><small>для Валентины</small></span>
+      </a>
+
+      <nav class="desktop-nav" aria-label="Основная навигация">
+        <a href="#/" data-nav="home">Главная</a>
+        <a href="#/courses" data-nav="courses">Программы</a>
+        <a href="#/start" data-nav="start">С чего начать</a>
+        <a href="#/bonuses" data-nav="bonuses">Материалы</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-button" id="searchButton" type="button" aria-label="Открыть поиск" title="Поиск (/)" data-ripple>
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+        </button>
+        <button class="icon-button" id="themeButton" type="button" aria-label="Сменить тему" title="Сменить тему" data-ripple>
+          <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path></svg>
+        </button>
+        <button class="menu-button" id="menuButton" type="button" aria-label="Открыть меню" aria-expanded="false"><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <aside class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu-panel">
+      <div class="mobile-menu-head"><strong>Меню</strong><button class="icon-button" id="menuClose" type="button" aria-label="Закрыть меню">×</button></div>
+      <nav>
+        <a href="#/">Главная <span>01</span></a>
+        <a href="#/courses">Все программы <span>02</span></a>
+        <a href="#/start">С чего начать <span>03</span></a>
+        <a href="#/bonuses">Материалы <span>04</span></a>
+      </nav>
+      <p>Обучение хранится прямо в этом сайте. Прогресс сохраняется только на вашем устройстве.</p>
+    </div>
+  </aside>
+
+  <main id="app" tabindex="-1">
+    <div class="route-loader"><span></span><span></span><span></span></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-grid">
+      <div>
+        <a class="brand brand-footer" href="#/">
+          <span class="brand-mark" aria-hidden="true">✦</span>
+          <span><strong>AI-школа</strong><small>для Валентины</small></span>
+        </a>
+        <p>Практическое обучение работе с нейросетями — от первого запроса до собственного проекта.</p>
+      </div>
+      <div><h3>Обучение</h3><a href="#/courses">Все программы</a><a href="#/start">Быстрый старт</a><a href="#/bonuses">Шаблоны и бонусы</a></div>
+      <div><h3>Важно</h3><a href="#/start/02_быстрый_старт_7_дней">Маршрут на 7 дней</a><a href="#/start/03_безопасность">Безопасность</a><a href="./materials/ТРЕКЕР_ОБУЧЕНИЯ.xlsx" download>Скачать трекер</a></div>
+      <div class="footer-status"><span class="status-dot"></span><p>Материалы актуальны на<br><strong>15 июля 2026 года</strong></p></div>
+    </div>
+    <div class="shell footer-bottom"><span>Сделано с заботой специально для Валентины</span><button type="button" id="scrollTop">Наверх ↑</button></div>
+  </footer>
+
+  <dialog class="search-dialog" id="searchDialog">
+    <div class="search-panel">
+      <div class="search-head">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+        <input id="globalSearch" type="search" placeholder="Найти курс, модуль или материал…" autocomplete="off">
+        <kbd>Esc</kbd>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+      <div class="search-hint"><span>Подсказка</span> Нажмите <kbd>/</kbd>, чтобы открыть поиск из любой страницы.</div>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+
+  <script src="./data/catalog.js"></script>
+  <script src="./data/library.js"></script>
+  <script src="./assets/app.js"></script>
+</body>
+</html>

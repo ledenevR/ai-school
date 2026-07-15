@@ -1,0 +1,11 @@
+{
+  "name": "AI-школа для Валентины",
+  "short_name": "AI-школа",
+  "description": "Практическое обучение нейросетям с нуля",
+  "lang": "ru",
+  "start_url": "./#/",
+  "display": "standalone",
+  "background_color": "#0b1020",
+  "theme_color": "#0b1020",
+  "icons": [{"src": "./favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}]
+}
