@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -52,6 +52,22 @@ jobs:
 
           echo "Publishing site from: ${site_path}"
           echo "path=${site_path}" >> "${GITHUB_OUTPUT}"
+
+      - name: Record detected source
+        shell: bash
+        run: |
+          printf '%s\n' '${{ steps.site.outputs.path }}' > .pages-source
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .pages-source
+
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: record GitHub Pages source [skip ci]"
+            git push
+          fi
+
+          rm -f .pages-source
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
