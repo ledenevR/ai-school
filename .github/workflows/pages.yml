@@ -24,17 +24,42 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+
+      - name: Find complete static site
+        id: site
+        shell: bash
+        run: |
+          site_path="."
+
+          if [[ ! -f "${site_path}/index.html" || ! -f "${site_path}/assets/app.js" || ! -f "${site_path}/assets/styles.css" || ! -f "${site_path}/data/catalog.js" || ! -f "${site_path}/data/library.js" ]]; then
+            site_path=""
+
+            while IFS= read -r index_file; do
+              candidate="$(dirname "${index_file}")"
+
+              if [[ -f "${candidate}/assets/app.js" && -f "${candidate}/assets/styles.css" && -f "${candidate}/data/catalog.js" && -f "${candidate}/data/library.js" ]]; then
+                site_path="${candidate}"
+                break
+              fi
+            done < <(find . -type f -name index.html -not -path './node_modules/*' | sort)
+          fi
+
+          if [[ -z "${site_path}" ]]; then
+            echo "::error::A complete site directory was not found. Required: index.html, assets/app.js, assets/styles.css, data/catalog.js and data/library.js."
+            exit 1
+          fi
+
+          echo "Publishing site from: ${site_path}"
+          echo "path=${site_path}" >> "${GITHUB_OUTPUT}"
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Upload static site
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
-          path: .
+          path: ${{ steps.site.outputs.path }}
 
       - name: Deploy to GitHub Pages
         id: deployment
